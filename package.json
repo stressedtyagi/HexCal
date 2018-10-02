@@ -1,0 +1,16 @@
+{
+  "name": "HexCal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gh-pages -d dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://creatorgaming.github.io/HexCal",
+  "dependencies": {
+    "gh-pages": "^2.0.0"
+  }
+}
