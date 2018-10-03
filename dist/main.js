@@ -111,6 +111,7 @@ let manageOperends = (input) => {
 }
 
 let calculate =  (oper_1, oper, oper_2) => {
+  console.log(oper_1 + " -- " + oper + " -- " + oper_2);
   let finalVal = "";
   switch (oper) {
     case "+":
@@ -141,6 +142,8 @@ let calculate =  (oper_1, oper, oper_2) => {
       break;
   }
   finalVal = finalVal.toString(16).toUpperCase();
+  console.log(finalVal);
+  
   return finalVal;
 }
 
