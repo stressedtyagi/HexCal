@@ -42,11 +42,11 @@ let manageOperator = (input) => {
 
   if (input === '=') {
     EQUAL_FLAG = true;
-    operator_in = 0;
-    if (buffer && buffer[0] != "-"){
+    if (buffer){
       manageOperends();
       buffer = "";
     }
+    operator_in = 0;
   }else  if (currentInput != '' && operators.indexOf(lastChar) == -1) {
     miniDisplay.innerHTML += input;
     display.innerHTML += input;
@@ -81,27 +81,45 @@ let manageOperends = (input) => {
     display.innerHTML = '';
     operator_in = 0;
   } else if ( (operator_in >= 2 && operators.indexOf(lastChar) > -1 && lastChar != "~") || (EQUAL_FLAG)){
-
-    let regexSearch = currentInput.search(/\+|\-|\/|\*|\||\&|\~|\%/);
-    let oper_1 = currentInput.substr(0,regexSearch);   
-    let oper = currentInput[regexSearch];
-    let oper_2 = currentInput.substr(regexSearch+1,currentInput.length);
-    console.log(oper_1 + " -- " + oper + " -- " + oper_2);
-
-    if (currentInput.indexOf('~') > -1) {
-      regexSearch = currentInput.search("~");
-      let temp = currentInput.substring(regexSearch+1, currentInput.length - 1);      
-      oper_2 = calculate(parseInt(temp, 16), "~");
-           
-      eval = calculate(parseInt(oper_1, 16),oper,parseInt(oper_2, 16));
-      display.innerHTML = eval;
-      operator_in = 0;
+    let regexSearch = "";
+    if (currentInput[0] === '-'){
+      regexSearch = currentInput.search(/\+|\/|\*|\||\&|\~|\%/);
+    }else if (currentInput[0] === '~') {
+      regexSearch = currentInput.search(/\+|\-|\/|\*|\||\&|\%/);
     }else {
-      console.log(oper_1 + " -- " + oper + " -- " + oper_2);
-      eval = calculate(parseInt(oper_1, 16),oper,parseInt(oper_2, 16));
-      display.innerHTML = eval;
-      operator_in = 0;
-    }    
+      regexSearch = currentInput.search(/\+|\-|\/|\*|\||\&|\%/);
+    }
+    if (regexSearch) {
+      let oper_1 = currentInput.substr(0,regexSearch);   
+      let oper = currentInput[regexSearch];
+      let oper_2 = currentInput.substr(regexSearch+1,currentInput.length);
+      // Debugging
+      // console.log(oper_1 + " -- " + oper + " -- " + oper_2);
+  
+      if (currentInput.indexOf('~') > -1) {
+        regexSearch = currentInput.search("~");      
+        let temp = "";       
+        
+        if (regexSearch === 0) {
+          temp = currentInput.substring(regexSearch+1, currentInput.length); 
+          oper_2 = calculate(parseInt(temp, 16), "~");
+          eval = oper_2;
+        } else {
+          temp = currentInput.substring(regexSearch+1, currentInput.length - 1); 
+          oper_2 = calculate(parseInt(temp, 16), "~");
+          eval = calculate(parseInt(oper_1, 16),oper,parseInt(oper_2, 16));
+        }    
+        display.innerHTML = eval;
+        operator_in = 0;
+      }else {
+        // DEBUGGING
+        // console.log(oper_1 + " -- " + oper + " -- " + oper_2);
+        
+        eval = calculate(parseInt(oper_1, 16),oper,parseInt(oper_2, 16));
+        display.innerHTML = eval;
+        operator_in = 0;
+      }      
+    }
   }else {
     if (input) {
       miniDisplay.innerHTML += input;
@@ -111,7 +129,8 @@ let manageOperends = (input) => {
 }
 
 let calculate =  (oper_1, oper, oper_2) => {
-  console.log(oper_1 + " -- " + oper + " -- " + oper_2);
+  // DEBUGGING
+  // console.log(oper_1 + " -- " + oper + " -- " + oper_2);
   let finalVal = "";
   switch (oper) {
     case "+":
@@ -142,8 +161,8 @@ let calculate =  (oper_1, oper, oper_2) => {
       break;
   }
   finalVal = finalVal.toString(16).toUpperCase();
-  console.log(finalVal);
-  
+  // DEBUGGING
+  // console.log(finalVal);
   return finalVal;
 }
 
