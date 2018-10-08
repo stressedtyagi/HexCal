@@ -59,11 +59,11 @@ let manageOperator = (input) => {
     display.innerHTML += input;
     operator_in++;
   }else if (operators.indexOf(input) > -1 && (currentInput.length > 1 && input != '~' )) {//|| lastChar != '~' || lastChar != '-')) {
-    miniDisplay.innerHTML += currentMiniInput.replace(/.$/,input);
-    display.innerHTML += currentInput.replace(/.$/,input);
+    miniDisplay.innerHTML = currentMiniInput.replace(/.$/,input);
+    display.innerHTML = currentInput.replace(/.$/,input);
   }else if (operators.indexOf(input) > -1 && (currentInput.length > 1 && (input == '~' || input == '-')) && (operators.indexOf(lastChar) > -1 && lastChar != '~')) {//|| lastChar != '~' || lastChar != '-')) {
-    miniDisplay.innerHTML += currentMiniInput.replace(/.$/,input);
-    display.innerHTML += currentInput.replace(/.$/,input);
+    miniDisplay.innerHTML = currentMiniInput.replace(/.$/,input);
+    display.innerHTML = currentInput.replace(/.$/,input);
   }
 
   if (operator_in >= 2) {
