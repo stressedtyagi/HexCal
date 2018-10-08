@@ -47,21 +47,25 @@ let manageOperator = (input) => {
       buffer = "";
     }
     operator_in = 0;
-  }else  if (currentInput != '' && operators.indexOf(lastChar) == -1) {
+  }else  if (currentInput != '' && operators.indexOf(lastChar) == -1 && input != '~') {    
     miniDisplay.innerHTML += input;
     display.innerHTML += input;
     operator_in++;
-  }else if (currentInput === '' && (input === '-' || input === '~')) {
+  }else if (currentInput === '' && (input === '-' || input === '~')) {   
     miniDisplay.innerHTML += input;
     display.innerHTML += input;
-  }else if (currentInput != '' && input === '~' && lastChar != '~' && operators.indexOf(lastChar) > -1) {
+  }else if (currentInput != '' && input === '~' && lastChar != '~' && operators.indexOf(lastChar) > -1) {      
     miniDisplay.innerHTML += input;
     display.innerHTML += input;
     operator_in++;
-  }else if (operators.indexOf(input) > -1 && (currentInput.length > 1 || lastChar === '~' || lastChar === '-')) {
+  }else if (operators.indexOf(input) > -1 && (currentInput.length > 1 && input != '~' )) {//|| lastChar != '~' || lastChar != '-')) {
+    miniDisplay.innerHTML += currentMiniInput.replace(/.$/,input);
+    display.innerHTML += currentInput.replace(/.$/,input);
+  }else if (operators.indexOf(input) > -1 && (currentInput.length > 1 && (input == '~' || input == '-')) && (operators.indexOf(lastChar) > -1 && lastChar != '~')) {//|| lastChar != '~' || lastChar != '-')) {
     miniDisplay.innerHTML += currentMiniInput.replace(/.$/,input);
     display.innerHTML += currentInput.replace(/.$/,input);
   }
+
   if (operator_in >= 2) {
     if (input != "~") {
       manageOperends();
